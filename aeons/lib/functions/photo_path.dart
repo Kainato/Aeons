@@ -14,6 +14,6 @@ photoPath(String value) {
   } else if (value.toLowerCase().contains('hunt')) {
     return 'lib/assets/path/Path_The_Hunt.png';
   } else {
-    return 'lib/assets/Path_X.png';
+    return 'lib/assets/X.png';
   }
 }

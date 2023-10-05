@@ -1,6 +1,7 @@
 import 'package:aeons/functions/getCircleAvatar.dart';
 import 'package:aeons/functions/photo_element.dart';
 import 'package:aeons/functions/photo_path.dart';
+import 'package:aeons/widgets/OrientationDivider.dart';
 import 'package:aeons/widgets/OrientationSwitcher.dart';
 import 'package:aeons/widgets/SelectableRichText.dart';
 import 'package:aeons/widgets/ShowListTile.dart';
@@ -24,7 +25,7 @@ class ShowChar extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Row(
+            OrientationSwitcher(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Flexible(
@@ -38,6 +39,7 @@ class ShowChar extends StatelessWidget {
                     url: '${data.photo}.png',
                   ),
                 ),
+                OrientationDivider(),
                 Flexible(
                   flex: 1,
                   child: Container(
@@ -48,7 +50,7 @@ class ShowChar extends StatelessWidget {
                         width: 4,
                       ),
                     ),
-                    child: Column(
+                    child: OrientationSwitcher(
                       children: [
                         ListTile(
                           title: SelectableTextRich(

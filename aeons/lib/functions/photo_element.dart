@@ -7,13 +7,13 @@ photoElement(String value) {
     return 'lib/assets/element/Type_Imaginary.png';
   } else if (value.toLowerCase().contains('lightning')) {
     return 'lib/assets/element/Type_Lightning.png';
-  } else if (value.toLowerCase().contains('physical.png')) {
+  } else if (value.toLowerCase().contains('physical')) {
     return 'lib/assets/element/Type_Physical.png';
   } else if (value.toLowerCase().contains('quantum')) {
     return 'lib/assets/element/Type_Quantum.png';
   } else if (value.toLowerCase().contains('wind')) {
     return 'lib/assets/element/Type_Wind.png';
   } else {
-    return 'lib/assets/Path_X.png';
+    return 'lib/assets/X.png';
   }
 }
