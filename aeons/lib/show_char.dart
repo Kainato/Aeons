@@ -1,11 +1,11 @@
+import 'package:aeons/functions/getCircleAvatar.dart';
+import 'package:aeons/functions/photo_element.dart';
+import 'package:aeons/functions/photo_path.dart';
 import 'package:aeons/widgets/OrientationSwitcher.dart';
 import 'package:aeons/widgets/SelectableRichText.dart';
-import 'package:aeons/widgets/photo_element.dart';
-import 'package:aeons/widgets/photo_path.dart';
-import 'package:aeons/widgets/showListTile.dart';
+import 'package:aeons/widgets/ShowListTile.dart';
 import 'package:flutter/material.dart';
 import 'package:aeons/SheetModel.dart';
-import 'package:aeons/widgets/avatar_null.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ShowChar extends StatelessWidget {
@@ -29,7 +29,7 @@ class ShowChar extends StatelessWidget {
               children: [
                 Flexible(
                   flex: 1,
-                  child: avatarNull(
+                  child: getCircleAvatar(
                     backgroundColor: data.stars == '⭐⭐⭐⭐⭐'
                         ? Colors.amber
                         : Colors.deepPurple,

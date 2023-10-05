@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget avatarNull({
+Widget getCircleAvatar({
   required photoLogic,
   required Color backgroundColor,
   required String url,

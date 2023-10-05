@@ -1,10 +1,10 @@
 import 'dart:developer';
+import 'package:aeons/functions/getCircleAvatar.dart';
 import 'package:flutter/material.dart';
 import 'package:aeons/widgets/RichText.dart';
 import 'package:aeons/SheetFunctions.dart';
 import 'package:aeons/SheetModel.dart';
 import 'package:aeons/show_char.dart';
-import 'package:aeons/widgets/avatar_null.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -73,7 +73,7 @@ Widget sheetList(List<SheetModel> sheetList) {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              avatarNull(
+              getCircleAvatar(
                 backgroundColor: sheetList[index].stars == '⭐⭐⭐⭐⭐'
                     ? Colors.amber
                     : Colors.deepPurple,
