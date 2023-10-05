@@ -1,95 +1,118 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:aeons/SheetFunctions.dart';
-import 'package:aeons/SheetModel.dart';
-import 'package:aeons/show_char.dart';
-import 'package:aeons/widgets/avatar_null.dart';
+import 'package:aeons/home_page.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // final Future<List<SheetModel>> sheets;
-
   @override
   Widget build(BuildContext context) {
+    double minWidth = MediaQuery.of(context).size.width < 300
+        ? 300
+        : MediaQuery.of(context).size.width;
+
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Padding Around FAB'),
+      home: HomePage(),
+      themeMode: ThemeMode.system,
+      themeAnimationCurve: Curves.bounceInOut,
+      themeAnimationDuration: Duration(milliseconds: 500),
+      theme: ThemeData(
+        textTheme: TextTheme(
+          titleSmall: TextStyle(fontSize: 12, color: Colors.white),
+          titleMedium: TextStyle(fontSize: 16, color: Colors.white),
+          titleLarge: TextStyle(fontSize: 20, color: Colors.white),
+          bodySmall: TextStyle(fontSize: 12, color: Colors.white),
+          bodyMedium: TextStyle(fontSize: 16, color: Colors.white),
+          bodyLarge: TextStyle(fontSize: 20, color: Colors.white),
+          displayLarge: TextStyle(fontSize: 24, color: Colors.white),
+          displayMedium: TextStyle(fontSize: 20, color: Colors.white),
+          displaySmall: TextStyle(fontSize: 16, color: Colors.white),
+          headlineLarge: TextStyle(fontSize: 24, color: Colors.white),
+          headlineMedium: TextStyle(fontSize: 20, color: Colors.white),
+          headlineSmall: TextStyle(fontSize: 16, color: Colors.white),
+          labelLarge: TextStyle(fontSize: 20, color: Colors.white),
+          labelMedium: TextStyle(fontSize: 16, color: Colors.white),
+          labelSmall: TextStyle(fontSize: 12, color: Colors.white),
         ),
-        body: Column(
-          children: [
-            FutureBuilder<List<SheetModel>>(
-              future: fetchSheet(),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  log(snapshot.error.toString(), name: 'snapshot error');
-                  return Center(child: Text(snapshot.error.toString()));
-                } else {
-                  if (snapshot.hasData) {
-                    // log(snapshot.toString(), name: 'snapshot hasdata');
-                    return Expanded(
-                      child: sheetList(snapshot.data!),
-                    );
-                  } else {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                }
-              },
-            ),
-          ],
+        useMaterial3: true,
+        fontFamily: GoogleFonts.quicksand().fontFamily,
+        colorScheme: ColorScheme(
+          brightness: Brightness.light,
+          // Primary Color
+          primary: Colors.deepPurple,
+          onPrimary: Colors.white,
+          // Secondary Color
+          secondary: Colors.lightGreen.shade600,
+          onSecondary: Colors.white,
+          // Tertiary Color
+          tertiary: Colors.orange.shade900,
+          onTertiary: Colors.white,
+          // Error Color
+          error: Colors.red,
+          onError: Colors.white,
+          // Surface Color
+          surface: Colors.white,
+          onSurface: Colors.black,
+          // Background Color
+          background: Colors.white,
+          onBackground: Colors.black,
         ),
-        floatingActionButton: MyFAB(),
       ),
-    );
-  }
-}
-
-class MyFAB extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton(
-      child: Icon(Icons.add),
-      onPressed: () {},
-    );
-  }
-}
-
-Widget sheetList(List<SheetModel> sheetList) {
-  return ListView.builder(
-    itemCount: sheetList.length,
-    itemBuilder: (context, index) {
-      return Card(
-        elevation: 5,
-        child: ListTile(
-          contentPadding: EdgeInsets.all(8),
-          leading: SizedBox(
-            height: double.infinity,
-            child: avatarNull(
-              backgroundColor: sheetList[index].stars == '⭐⭐⭐⭐⭐'
-                  ? Colors.amber
-                  : Colors.deepPurple,
-              photoLogic: sheetList[index].photo.isEmpty,
-              radius: 20,
-              url: '${sheetList[index].photo}.png',
-            ),
-          ),
-          title: Text(
-            sheetList[index].name.toString(),
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ShowChar(
-                data: sheetList[index],
-              ),
-            ),
-          ),
+      darkTheme: ThemeData(
+        textTheme: TextTheme(
+          titleSmall: TextStyle(fontSize: 12, color: Colors.white),
+          titleMedium: TextStyle(fontSize: 16, color: Colors.white),
+          titleLarge: TextStyle(fontSize: 20, color: Colors.white),
+          bodySmall: TextStyle(fontSize: 12, color: Colors.white),
+          bodyMedium: TextStyle(fontSize: 16, color: Colors.white),
+          bodyLarge: TextStyle(fontSize: 20, color: Colors.white),
+          displayLarge: TextStyle(fontSize: 24, color: Colors.white),
+          displayMedium: TextStyle(fontSize: 20, color: Colors.white),
+          displaySmall: TextStyle(fontSize: 16, color: Colors.white),
+          headlineLarge: TextStyle(fontSize: 24, color: Colors.white),
+          headlineMedium: TextStyle(fontSize: 20, color: Colors.white),
+          headlineSmall: TextStyle(fontSize: 16, color: Colors.white),
+          labelLarge: TextStyle(fontSize: 20, color: Colors.white),
+          labelMedium: TextStyle(fontSize: 16, color: Colors.white),
+          labelSmall: TextStyle(fontSize: 12, color: Colors.white),
         ),
-      );
-    },
-  );
+        useMaterial3: true,
+        fontFamily: GoogleFonts.quicksand().fontFamily,
+        colorScheme: ColorScheme(
+          brightness: Brightness.dark,
+          // Primary Color
+          primary: Colors.deepPurple.shade200,
+          onPrimary: Colors.white,
+          // Secondary Color
+          secondary: Colors.lightGreen.shade200,
+          onSecondary: Colors.white,
+          // Tertiary Color
+          tertiary: Colors.orange.shade200,
+          onTertiary: Colors.white,
+          // Error Color
+          error: Colors.red.shade200,
+          onError: Colors.white,
+          // Surface Color
+          surface: Color(0x121212),
+          onSurface: Colors.white,
+          // Background Color
+          background: Colors.grey.shade800,
+          onBackground: Colors.white,
+        ),
+      ),
+      builder: (context, child) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(
+            size: Size(
+              minWidth,
+              MediaQuery.of(context).size.height,
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+  }
 }

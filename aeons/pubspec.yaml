@@ -11,6 +11,8 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
   http: ^0.13.3
+  font_awesome_flutter: ^10.1.0
+  google_fonts: ^4.0.3
 
 dev_dependencies:
   flutter_test:
@@ -23,3 +25,18 @@ flutter:
     # - lang/
     - lib/assets/
     - lib/assets/blank_user.png
+    - lib/assets/path/Path_Abundance.png
+    - lib/assets/path/Path_Destruction.png
+    - lib/assets/path/Path_Erudition.png
+    - lib/assets/path/Path_Harmony.png
+    - lib/assets/path/Path_Nihility.png
+    - lib/assets/path/Path_Preservation.png
+    - lib/assets/path/Path_The_Hunt.png
+    - lib/assets/X.png
+    - lib/assets/element/Type_Fire.png
+    - lib/assets/element/Type_Ice.png
+    - lib/assets/element/Type_Imaginary.png
+    - lib/assets/element/Type_Lightning.png
+    - lib/assets/element/Type_Physical.png
+    - lib/assets/element/Type_Quantum.png
+    - lib/assets/element/Type_Wind.png
