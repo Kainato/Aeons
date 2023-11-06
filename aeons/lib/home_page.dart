@@ -7,6 +7,7 @@ import 'package:aeons/widgets/RichText.dart';
 import 'package:aeons/SheetFunctions.dart';
 import 'package:aeons/SheetModel.dart';
 import 'package:aeons/show_char.dart';
+import 'package:gap/gap.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,16 +18,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final TextEditingController iconController = TextEditingController();
-  IconLabel? selectedIcon;
 
   @override
   Widget build(BuildContext context) {
-    final List<DropdownMenuEntry<IconLabel>> iconEntries =
-        <DropdownMenuEntry<IconLabel>>[];
-    for (final IconLabel icon in IconLabel.values) {
-      iconEntries
-          .add(DropdownMenuEntry<IconLabel>(value: icon, label: icon.label));
-    }
     return Scaffold(
       appBar: AppBar(
         title: Text('Aeons'),
@@ -71,13 +65,20 @@ class _HomePageState extends State<HomePage> {
 }
 
 Widget sheetList(List<SheetModel> sheetList, context) {
-  Orientation orientation = MediaQuery.of(context).orientation;
+  double radius = 32;
   return GridView.builder(
     itemCount: sheetList.length,
     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-      crossAxisCount: orientation == Orientation.portrait ? 2 : 4,
       crossAxisSpacing: 8,
-      childAspectRatio: 0.9,
+      childAspectRatio:
+          MediaQuery.of(context).size.height > MediaQuery.of(context).size.width
+              ? MediaQuery.of(context).size.width * 0.0025
+              : MediaQuery.of(context).size.width * 0.0015,
+      // childAspectRatio: 4.5,
+      crossAxisCount:
+          MediaQuery.of(context).size.width > MediaQuery.of(context).size.height
+              ? 3
+              : 2,
     ),
     itemBuilder: (context, index) {
       return InkWell(
@@ -91,62 +92,80 @@ Widget sheetList(List<SheetModel> sheetList, context) {
         ),
         borderRadius: BorderRadius.circular(12),
         child: Card(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
+          child: Center(
+            child: GridTile(
+                child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 getCircleAvatar(
                   backgroundColor: sheetList[index].stars == '⭐⭐⭐⭐⭐'
                       ? Colors.amber
                       : Colors.deepPurple,
                   photoLogic: sheetList[index].photo.isEmpty,
-                  radius: 50,
                   url: '${sheetList[index].photo}.png',
+                  radius: radius,
                 ),
-                SizedBox(height: 8),
+                Gap(8),
                 TextRich(
-                  textAlign: TextAlign.center,
                   text: sheetList[index].name,
+                  textAlign: TextAlign.start,
                   bold: FontWeight.bold,
                   fontSize: 16,
                   maxLines: 1,
                 ),
-                Divider(),
+                Gap(8),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Image.asset(
                       photoPath(sheetList[index].path),
-                      width: 32,
+                      width: radius,
                     ),
+                    Gap(8),
                     Image.asset(
                       photoElement(sheetList[index].element),
-                      width: 32,
+                      width: radius,
                     ),
                   ],
                 ),
               ],
-            ),
+            )
+                /* title: TextRich(
+                text: sheetList[index].name,
+                textAlign: TextAlign.start,
+                bold: FontWeight.bold,
+                fontSize: 16,
+                maxLines: 1,
+              ),
+              leading: getCircleAvatar(
+                backgroundColor: sheetList[index].stars == '⭐⭐⭐⭐⭐'
+                    ? Colors.amber
+                    : Colors.deepPurple,
+                photoLogic: sheetList[index].photo.isEmpty,
+                url: '${sheetList[index].photo}.png',
+                radius: radius,
+              ),
+              trailing: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Image.asset(
+                    photoPath(sheetList[index].path),
+                    width: radius * 2,
+                  ),
+                  Gap(8),
+                  Image.asset(
+                    photoElement(sheetList[index].element),
+                    width: radius * 2,
+                  ),
+                ],
+              ),
+             */
+                ),
           ),
         ),
       );
     },
   );
-}
-
-enum IconLabel {
-  smile('Smile', Icons.sentiment_satisfied_outlined),
-  cloud(
-    'Cloud',
-    Icons.cloud_outlined,
-  ),
-  brush('Brush', Icons.brush_outlined),
-  heart('Heart', Icons.favorite);
-
-  const IconLabel(this.label, this.icon);
-  final String label;
-  final IconData icon;
 }
