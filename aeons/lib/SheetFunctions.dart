@@ -18,7 +18,7 @@ List<SheetModel> decodeSheet(String responseBody) {
 Future<List<SheetModel>> fetchSheet() async {
   final response = await http.get(
     Uri.parse(
-      'https://script.google.com/macros/s/AKfycbxvcWssAZHwGev835drm7tbU0w1uai3dzWkOLL1aeGXk_3yAhlYbFAfTsMGipVkwha2/exec',
+      'https://script.google.com/macros/s/AKfycbwAwFRJPXSIxYER7FSZlE19_f1IvwnckoU6b9rGZCmrcM7-FJbzRy1KkmS9Sf2qUQTa/exec',
     ),
   );
   log(response.body, name: 'response body');

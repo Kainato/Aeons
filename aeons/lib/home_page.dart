@@ -1,9 +1,8 @@
 import 'dart:developer';
-import 'package:aeons/functions/getCircleAvatar.dart';
 import 'package:aeons/functions/photo_element.dart';
 import 'package:aeons/functions/photo_path.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:aeons/widgets/RichText.dart';
 import 'package:aeons/SheetFunctions.dart';
 import 'package:aeons/SheetModel.dart';
 import 'package:aeons/show_char.dart';
@@ -18,6 +17,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final TextEditingController iconController = TextEditingController();
+  final TextEditingController searchController = TextEditingController();
+  bool search = false;
 
   @override
   Widget build(BuildContext context) {
@@ -26,95 +27,149 @@ class _HomePageState extends State<HomePage> {
         title: Text('Aeons'),
         actions: [
           IconButton(
-            onPressed: () {},
             icon: Icon(Icons.search),
+            onPressed: () => setState(() => search = !search),
+            color: search ? Colors.white : Colors.grey,
           ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.help),
-          )
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            FutureBuilder<List<SheetModel>>(
-              future: fetchSheet(),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  log(snapshot.error.toString(), name: 'snapshot error');
-                  return Center(child: Text(snapshot.error.toString()));
-                } else {
-                  if (snapshot.hasData) {
-                    // log(snapshot.toString(), name: 'snapshot hasdata');
-                    return Expanded(
-                      child: sheetList(snapshot.data!, context),
-                    );
-                  } else {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                }
-              },
-            ),
-          ],
+      body: GestureDetector(
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        behavior: HitTestBehavior.opaque,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Column(
+            children: [
+              AnimatedOpacity(
+                opacity: search ? 1 : 0,
+                duration: Duration(milliseconds: 500),
+                child: search
+                    ? Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: TextFormField(
+                          controller: searchController,
+                          // onSaved: (value) =>
+                          //     setState(() => searchChar(value!)),
+                          decoration: InputDecoration(
+                            hintText: 'Search character',
+                            hintTextDirection: TextDirection.ltr,
+                            prefixIcon: IconButton(
+                              icon: Icon(Icons.clear),
+                              onPressed: () => setState(() {
+                                searchController.clear();
+                                FocusManager.instance.primaryFocus?.unfocus();
+                              }),
+                            ),
+                            // suffixIcon: IconButton(
+                            //   icon: Icon(Icons.send),
+                            //   onPressed: () => setState(() {
+                            //     searchChar(searchController.text);
+                            //     FocusManager.instance.primaryFocus?.unfocus();
+                            //   }),
+                            // ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                        ),
+                      )
+                    : Container(),
+              ),
+              Expanded(
+                child: FutureBuilder<List<SheetModel>>(
+                  future: fetchSheet(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      log(snapshot.error.toString(), name: 'snapshot error');
+                      return Center(child: Text(snapshot.error.toString()));
+                    } else {
+                      if (snapshot.hasData) {
+                        // log(snapshot.toString(), name: 'snapshot hasdata');
+                        return sheetList(snapshot.data!, context);
+                      } else {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                    }
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
+// searchChar(String value) {
+//   log(value.toString(), name: 'searchChar');
+//   String search = value.toLowerCase();
+
+//   // List<SheetModel> searchList = sheetList.where((element) {
+//   //   String name = element.name.toLowerCase();
+//   //   return name.contains(search);
+//   // }).toList();
+
+//   log(searchList.toString(), name: 'searchList');
+// }
+
 Widget sheetList(List<SheetModel> sheetList, context) {
   double radius = 32;
   return GridView.builder(
     itemCount: sheetList.length,
-    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+      maxCrossAxisExtent: 250,
+      childAspectRatio: 0.75,
       crossAxisSpacing: 8,
-      childAspectRatio:
-          MediaQuery.of(context).size.height > MediaQuery.of(context).size.width
-              ? MediaQuery.of(context).size.width * 0.0025
-              : MediaQuery.of(context).size.width * 0.0015,
-      // childAspectRatio: 4.5,
-      crossAxisCount:
-          MediaQuery.of(context).size.width > MediaQuery.of(context).size.height
-              ? 3
-              : 2,
+      mainAxisSpacing: 8,
     ),
-    itemBuilder: (context, index) {
-      return InkWell(
-        onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ShowChar(
-              data: sheetList[index],
-            ),
+    itemBuilder: (context, index) => InkWell(
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ShowChar(
+            data: sheetList[index],
           ),
         ),
-        borderRadius: BorderRadius.circular(12),
-        child: Card(
-          child: Center(
-            child: GridTile(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                getCircleAvatar(
-                  backgroundColor: sheetList[index].stars == '⭐⭐⭐⭐⭐'
-                      ? Colors.amber
-                      : Colors.deepPurple,
-                  photoLogic: sheetList[index].photo.isEmpty,
-                  url: '${sheetList[index].photo}.png',
-                  radius: radius,
+      ),
+      borderRadius: BorderRadius.circular(12),
+      child: Card(
+        child: GridTile(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(
+                child: Container(
+                  height: double.infinity,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(12),
+                      topRight: Radius.circular(12),
+                    ),
+                    color: sheetList[index].stars == '⭐⭐⭐⭐⭐'
+                        ? Colors.amber
+                        : Colors.deepPurple,
+                  ),
+                  child: Image.network(
+                    sheetList[index].photo,
+                    fit: BoxFit.cover,
+                  ),
                 ),
-                Gap(8),
-                TextRich(
-                  text: sheetList[index].name,
+              ),
+              ListTile(
+                title: AutoSizeText(
+                  sheetList[index].name,
                   textAlign: TextAlign.start,
-                  bold: FontWeight.bold,
-                  fontSize: 16,
-                  maxLines: 1,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
                 ),
-                Gap(8),
-                Row(
+                contentPadding: EdgeInsets.fromLTRB(8, 0, 4, 0),
+                trailing: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -129,43 +184,11 @@ Widget sheetList(List<SheetModel> sheetList, context) {
                     ),
                   ],
                 ),
-              ],
-            )
-                /* title: TextRich(
-                text: sheetList[index].name,
-                textAlign: TextAlign.start,
-                bold: FontWeight.bold,
-                fontSize: 16,
-                maxLines: 1,
               ),
-              leading: getCircleAvatar(
-                backgroundColor: sheetList[index].stars == '⭐⭐⭐⭐⭐'
-                    ? Colors.amber
-                    : Colors.deepPurple,
-                photoLogic: sheetList[index].photo.isEmpty,
-                url: '${sheetList[index].photo}.png',
-                radius: radius,
-              ),
-              trailing: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Image.asset(
-                    photoPath(sheetList[index].path),
-                    width: radius * 2,
-                  ),
-                  Gap(8),
-                  Image.asset(
-                    photoElement(sheetList[index].element),
-                    width: radius * 2,
-                  ),
-                ],
-              ),
-             */
-                ),
+            ],
           ),
         ),
-      );
-    },
+      ),
+    ),
   );
 }

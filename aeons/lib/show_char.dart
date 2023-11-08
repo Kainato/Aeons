@@ -36,7 +36,7 @@ class ShowChar extends StatelessWidget {
                         : Colors.deepPurple,
                     photoLogic: data.photo.isEmpty,
                     radius: 100,
-                    url: '${data.photo}.png',
+                    url: data.photo,
                   ),
                 ),
                 OrientationDivider(),
@@ -50,7 +50,7 @@ class ShowChar extends StatelessWidget {
                         width: 4,
                       ),
                     ),
-                    child: OrientationSwitcher(
+                    child: Column(
                       children: [
                         ListTile(
                           title: SelectableTextRich(
@@ -102,6 +102,7 @@ class ShowChar extends StatelessWidget {
             ),
             Divider(),
             OrientationSwitcher(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Flexible(
                   flex: 1,
@@ -115,6 +116,7 @@ class ShowChar extends StatelessWidget {
                           child: Icon(FontAwesomeIcons.shirt),
                         ),
                       ),
+                      Divider(color: Colors.transparent),
                       ShowListTile(
                         title: 'Feet Status',
                         subtitle: data.feetStatus,
@@ -123,6 +125,7 @@ class ShowChar extends StatelessWidget {
                           child: Icon(FontAwesomeIcons.socks),
                         ),
                       ),
+                      Divider(color: Colors.transparent),
                       ShowListTile(
                         title: 'Planar Sphere Status',
                         subtitle: data.planarSphere,
@@ -131,6 +134,7 @@ class ShowChar extends StatelessWidget {
                           child: Icon(FontAwesomeIcons.circleDot),
                         ),
                       ),
+                      Divider(color: Colors.transparent),
                       ShowListTile(
                         title: 'Link Rope Status',
                         subtitle: data.linkRope,
@@ -139,6 +143,7 @@ class ShowChar extends StatelessWidget {
                           child: Icon(FontAwesomeIcons.linesLeaning),
                         ),
                       ),
+                      Divider(color: Colors.transparent),
                       ShowListTile(
                         title: 'Best Substatus',
                         subtitle: data.bestSubstatus,
@@ -147,18 +152,71 @@ class ShowChar extends StatelessWidget {
                           child: Icon(FontAwesomeIcons.listCheck),
                         ),
                       ),
+                      Divider(color: Colors.transparent),
                     ],
                   ),
                 ),
                 Flexible(
                   flex: 1,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      SelectableText(data.bestRelics),
-                      Divider(),
-                      SelectableText(data.bestOrnaments),
-                      Divider(),
-                      SelectableText(data.bestLightCones),
+                      Tooltip(
+                        message: data.bestRelicsDescription,
+                        triggerMode: TooltipTriggerMode.tap,
+                        child: ListTile(
+                          title: SelectableTextRich(
+                            text: 'Best Relics',
+                            bold: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                          subtitle:
+                              SelectableTextRich(text: data.bestRelicsName),
+                          leading: Image.network(
+                            data.bestRelics,
+                            width: 50,
+                          ),
+                        ),
+                      ),
+                      Divider(color: Colors.transparent),
+                      Tooltip(
+                        message: data.bestOrnamentsDescription,
+                        triggerMode: TooltipTriggerMode.tap,
+                        child: ListTile(
+                          title: SelectableTextRich(
+                            text: 'Best Ornaments',
+                            bold: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                          subtitle:
+                              SelectableTextRich(text: data.bestOrnamentsName),
+                          leading: Image.network(
+                            data.bestOrnaments,
+                            width: 50,
+                          ),
+                        ),
+                      ),
+                      Divider(color: Colors.transparent),
+                      Tooltip(
+                        message: data.bestLightCones,
+                        triggerMode: TooltipTriggerMode.tap,
+                        child: ListTile(
+                          title: SelectableTextRich(
+                            text: 'Bests Light Cones',
+                            bold: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                          leading: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 13),
+                            child: Icon(FontAwesomeIcons.gun),
+                          ),
+                          subtitle: Image.network(
+                            data.bestLightConesImages,
+                            width: 200,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),

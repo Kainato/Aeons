@@ -9,11 +9,11 @@ class SelectableTextRich extends StatelessWidget {
   final FontWeight? bold;
   final FontStyle? italic;
   final double fontSize;
-  final Color color;
+  final Color? color;
 
   final String richText;
   final double richFontSize;
-  final Color richcolor;
+  final Color? richcolor;
   final FontWeight? richbold;
   final FontStyle? richitalic;
 
@@ -27,8 +27,8 @@ class SelectableTextRich extends StatelessWidget {
     this.richText = '',
     this.richFontSize = 14,
     this.textAlign,
-    this.color = Colors.white,
-    this.richcolor = Colors.white,
+    this.color,
+    this.richcolor,
     this.richbold = FontWeight.normal,
     this.richitalic = FontStyle.normal,
   });
