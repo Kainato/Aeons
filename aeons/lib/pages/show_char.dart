@@ -1,3 +1,4 @@
+import 'package:aeons/classes/constructors/SheetModel.dart';
 import 'package:aeons/functions/getCircleAvatar.dart';
 import 'package:aeons/functions/photo_element.dart';
 import 'package:aeons/functions/photo_path.dart';
@@ -6,7 +7,6 @@ import 'package:aeons/widgets/OrientationSwitcher.dart';
 import 'package:aeons/widgets/SelectableRichText.dart';
 import 'package:aeons/widgets/ShowListTile.dart';
 import 'package:flutter/material.dart';
-import 'package:aeons/SheetModel.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ShowChar extends StatelessWidget {

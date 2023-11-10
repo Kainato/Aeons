@@ -1,4 +1,4 @@
-import 'package:aeons/classes/ModeTheme.dart';
+import 'package:aeons/classes/app/ModeTheme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

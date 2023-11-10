@@ -1,7 +1,7 @@
-import 'package:aeons/classes/AppTheme.dart';
-import 'package:aeons/classes/ModeTheme.dart';
+import 'package:aeons/classes/app/AppTheme.dart';
+import 'package:aeons/classes/app/ModeTheme.dart';
 import 'package:flutter/material.dart';
-import 'package:aeons/home_page.dart';
+import 'package:aeons/pages/home_page.dart';
 import 'package:provider/provider.dart';
 
 void main() {

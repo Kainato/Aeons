@@ -1,12 +1,13 @@
 import 'dart:developer';
+import 'package:aeons/data/SheetFunctions.dart';
+import 'package:aeons/classes/constructors/SheetModel.dart';
 import 'package:aeons/functions/photo_element.dart';
 import 'package:aeons/functions/photo_path.dart';
 import 'package:aeons/widgets/ChangeThemeButton.dart';
+import 'package:aeons/widgets/ScaffoldBase.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:aeons/SheetFunctions.dart';
-import 'package:aeons/SheetModel.dart';
-import 'package:aeons/show_char.dart';
+import 'package:aeons/pages/show_char.dart';
 import 'package:gap/gap.dart';
 
 class HomePage extends StatefulWidget {
@@ -23,80 +24,74 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Aeons'),
-        actions: [
-          IconButton(
-            tooltip: 'Search character',
-            icon: Icon(Icons.search),
-            onPressed: () => setState(() => search = !search),
-          ),
-          ChangeThemeButton(),
-        ],
-      ),
-      body: GestureDetector(
-        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-        behavior: HitTestBehavior.opaque,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: Column(
-            children: [
-              AnimatedOpacity(
-                opacity: search ? 1 : 0,
-                duration: Duration(milliseconds: 500),
-                child: search
-                    ? Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
-                        child: TextFormField(
-                          controller: searchController,
-                          // onSaved: (value) =>
-                          //     setState(() => searchChar(value!)),
-                          decoration: InputDecoration(
-                            hintText: 'Search character',
-                            hintTextDirection: TextDirection.ltr,
-                            prefixIcon: IconButton(
-                              icon: Icon(Icons.clear),
-                              onPressed: () => setState(() {
-                                searchController.clear();
-                                FocusManager.instance.primaryFocus?.unfocus();
-                              }),
-                            ),
-                            // suffixIcon: IconButton(
-                            //   icon: Icon(Icons.send),
-                            //   onPressed: () => setState(() {
-                            //     searchChar(searchController.text);
-                            //     FocusManager.instance.primaryFocus?.unfocus();
-                            //   }),
-                            // ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
+    return ScaffoldBase(
+      title: 'Aeons',
+      actions: [
+        IconButton(
+          tooltip: 'Search character',
+          icon: Icon(Icons.search),
+          onPressed: () => setState(() => search = !search),
+        ),
+        ChangeThemeButton(),
+      ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Column(
+          children: [
+            AnimatedOpacity(
+              opacity: search ? 1 : 0,
+              duration: Duration(milliseconds: 500),
+              child: search
+                  ? Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: TextFormField(
+                        controller: searchController,
+                        // onSaved: (value) =>
+                        //     setState(() => searchChar(value!)),
+                        decoration: InputDecoration(
+                          hintText: 'Search character',
+                          hintTextDirection: TextDirection.ltr,
+                          prefixIcon: IconButton(
+                            icon: Icon(Icons.clear),
+                            onPressed: () => setState(() {
+                              searchController.clear();
+                              FocusManager.instance.primaryFocus?.unfocus();
+                            }),
+                          ),
+                          // suffixIcon: IconButton(
+                          //   icon: Icon(Icons.send),
+                          //   onPressed: () => setState(() {
+                          //     searchChar(searchController.text);
+                          //     FocusManager.instance.primaryFocus?.unfocus();
+                          //   }),
+                          // ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
                           ),
                         ),
-                      )
-                    : Container(),
-              ),
-              Expanded(
-                child: FutureBuilder<List<SheetModel>>(
-                  future: fetchSheet(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasError) {
-                      log(snapshot.error.toString(), name: 'snapshot error');
-                      return Center(child: Text(snapshot.error.toString()));
+                      ),
+                    )
+                  : Container(),
+            ),
+            Expanded(
+              child: FutureBuilder<List<SheetModel>>(
+                future: fetchSheet(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    log(snapshot.error.toString(), name: 'snapshot error');
+                    return Center(child: Text(snapshot.error.toString()));
+                  } else {
+                    if (snapshot.hasData) {
+                      // log(snapshot.toString(), name: 'snapshot hasdata');
+                      return sheetList(snapshot.data!, context);
                     } else {
-                      if (snapshot.hasData) {
-                        // log(snapshot.toString(), name: 'snapshot hasdata');
-                        return sheetList(snapshot.data!, context);
-                      } else {
-                        return Center(child: CircularProgressIndicator());
-                      }
+                      return Center(child: CircularProgressIndicator());
                     }
-                  },
-                ),
+                  }
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
