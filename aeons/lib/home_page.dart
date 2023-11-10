@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:aeons/functions/photo_element.dart';
 import 'package:aeons/functions/photo_path.dart';
+import 'package:aeons/widgets/ChangeThemeButton.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:aeons/SheetFunctions.dart';
@@ -27,10 +28,11 @@ class _HomePageState extends State<HomePage> {
         title: Text('Aeons'),
         actions: [
           IconButton(
+            tooltip: 'Search character',
             icon: Icon(Icons.search),
             onPressed: () => setState(() => search = !search),
-            color: search ? Colors.white : Colors.grey,
           ),
+          ChangeThemeButton(),
         ],
       ),
       body: GestureDetector(
