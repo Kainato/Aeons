@@ -1,4 +1,4 @@
-import 'package:aeons/classes/colorsData.dart';
+import 'package:aeons/classes/app/ColorsData.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
