@@ -7,6 +7,8 @@ class ChangeThemeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool value = Theme.of(context).brightness == Brightness.dark;
+
     return Tooltip(
       message: 'Change application theme between dark mode and light mode',
       child: SwitchListTile(
@@ -18,7 +20,8 @@ class ChangeThemeButton extends StatelessWidget {
             darkTheme: 'Dark mode',
           ),
         ),
-        value: Provider.of<ModeTheme>(context).isDarkMode,
+        value: value,
+        // value: Provider.of<ModeTheme>(context).isDarkMode,
         onChanged: (value) {
           final provider = Provider.of<ModeTheme>(context, listen: false);
           provider.toggleTheme(value);

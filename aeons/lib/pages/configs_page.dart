@@ -1,3 +1,4 @@
+import 'package:aeons/classes/constructors/NavigationItem.dart';
 import 'package:aeons/widgets/DrawerBase.dart';
 import 'package:flutter/material.dart';
 import 'package:aeons/widgets/ScaffoldBase.dart';
@@ -15,7 +16,7 @@ class _ConfigsPageState extends State<ConfigsPage> {
   Widget build(BuildContext context) {
     return ScaffoldBase(
       title: 'Configurações do APP',
-      drawer: DrawerBase(),
+      drawer: DrawerBase(currentPage: NavigationItem.configs),
       body: ListView(
         children: [
           ChangeThemeButton(),

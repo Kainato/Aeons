@@ -1,5 +1,6 @@
 import 'package:aeons/classes/app/AppTheme.dart';
 import 'package:aeons/classes/app/ModeTheme.dart';
+import 'package:aeons/pages/about_page.dart';
 import 'package:aeons/pages/configs_page.dart';
 import 'package:flutter/material.dart';
 import 'package:aeons/pages/home_page.dart';
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
           routes: {
             '/home': (context) => HomePage(),
             '/configs': (context) => ConfigsPage(),
-            // '/about': (context) => AboutPage(),
+            '/about': (context) => AboutPage(),
           },
         );
       },

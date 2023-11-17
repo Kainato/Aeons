@@ -1,3 +1,4 @@
+import 'package:aeons/classes/constructors/NavigationItem.dart';
 import 'dart:developer';
 import 'package:aeons/data/SheetFunctions.dart';
 import 'package:aeons/classes/constructors/SheetModel.dart';
@@ -26,7 +27,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return ScaffoldBase(
       title: 'Aeons',
-      drawer: DrawerBase(),
+      drawer: DrawerBase(currentPage: NavigationItem.home),
       actions: [
         IconButton(
           tooltip: 'Search character',
