@@ -9,10 +9,10 @@ import 'package:aeons/widgets/ShowListTile.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class ShowChar extends StatelessWidget {
+class ShowCharPage extends StatelessWidget {
   final SheetModel data;
 
-  const ShowChar({
+  const ShowCharPage({
     Key? key,
     required this.data,
   }) : super(key: key);

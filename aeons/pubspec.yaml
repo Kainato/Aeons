@@ -27,7 +27,7 @@ flutter:
   assets:
     # - lang/
     - lib/assets/
-    - lib/assets/blank_user.png
+    - lib/assets/Aeons_Logo.png
     - lib/assets/path/Path_Abundance.png
     - lib/assets/path/Path_Destruction.png
     - lib/assets/path/Path_Erudition.png
@@ -35,7 +35,6 @@ flutter:
     - lib/assets/path/Path_Nihility.png
     - lib/assets/path/Path_Preservation.png
     - lib/assets/path/Path_The_Hunt.png
-    - lib/assets/X.png
     - lib/assets/element/Type_Fire.png
     - lib/assets/element/Type_Ice.png
     - lib/assets/element/Type_Imaginary.png

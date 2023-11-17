@@ -3,7 +3,7 @@ import 'package:aeons/data/SheetFunctions.dart';
 import 'package:aeons/classes/constructors/SheetModel.dart';
 import 'package:aeons/functions/photo_element.dart';
 import 'package:aeons/functions/photo_path.dart';
-import 'package:aeons/widgets/ChangeThemeButton.dart';
+import 'package:aeons/widgets/DrawerBase.dart';
 import 'package:aeons/widgets/ScaffoldBase.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -26,13 +26,13 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return ScaffoldBase(
       title: 'Aeons',
+      drawer: DrawerBase(),
       actions: [
         IconButton(
           tooltip: 'Search character',
           icon: Icon(Icons.search),
           onPressed: () => setState(() => search = !search),
         ),
-        ChangeThemeButton(),
       ],
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -124,7 +124,7 @@ Widget sheetList(List<SheetModel> sheetList, context) {
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ShowChar(
+          builder: (context) => ShowCharPage(
             data: sheetList[index],
           ),
         ),
